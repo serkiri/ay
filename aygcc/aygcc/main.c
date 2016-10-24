@@ -174,8 +174,9 @@ void processLine(unsigned char numCh){
 				if((cur_com&0xF0)==0x10){//set 0 orn, set sample, set env
 					setOrn(numCh, 0);
 					is_env[numCh]=1;
-					cur_env=pt3array(cur_pat_add[numCh]++)*256+pt3array(cur_pat_add[numCh]++);
-					cur_env_type=cur_com&0x0F-1;
+					cur_env=pt3array(cur_pat_add[numCh] + 1)*256 + pt3array(cur_pat_add[numCh] + 2);
+					cur_pat_add[numCh] += 2;
+					cur_env_type=(cur_com&0x0F)-1;
 					is_env_ch=1;
 					setSample(numCh,(pt3array(cur_pat_add[numCh]++)));
 					spec_env_accum=0;
@@ -198,8 +199,9 @@ void processLine(unsigned char numCh){
 				if((cur_com&0xF0)==0xB0){//set 0 orn, set env
 					//setOrn(numCh, 0);
 					is_env[numCh]=1;
-					cur_env=pt3array(cur_pat_add[numCh]++)*256+pt3array(cur_pat_add[numCh]++);
-					cur_env_type=cur_com&0x0F-1;
+					cur_env=pt3array(cur_pat_add[numCh] + 1)*256 + pt3array(cur_pat_add[numCh] + 2);
+					cur_pat_add[numCh] += 2;
+					cur_env_type=(cur_com&0x0F)-1;
 					is_env_ch=1;
 					spec_env_accum=0;
 					break;
@@ -226,14 +228,17 @@ void processLine(unsigned char numCh){
 			case 0x01:
 			spec_com[numCh] = 0x01;
 			spec_del[numCh] = pt3array(cur_pat_add[numCh]++);
-			spec_par1[numCh] = pt3array(cur_pat_add[numCh]++)+pt3array(cur_pat_add[numCh]++)*256;
+			spec_par1[numCh] = pt3array(cur_pat_add[numCh] + 1) + pt3array(cur_pat_add[numCh] + 2)*256;
+			cur_pat_add[numCh] += 2;
 			spec_del_count[numCh]=(char)(spec_del[numCh]);//cavr
 			break;
 			case 0x02:
 			spec_com[numCh] = 0x02;
 			spec_del[numCh] = pt3array(cur_pat_add[numCh]++);
-			spec_par2[numCh] = pt3array(cur_pat_add[numCh]++)+pt3array(cur_pat_add[numCh]++)*256;
-			spec_par1[numCh] = pt3array(cur_pat_add[numCh]++)+pt3array(cur_pat_add[numCh]++)*256;
+			spec_par2[numCh] = pt3array(cur_pat_add[numCh] + 1) + pt3array(cur_pat_add[numCh] + 2)*256;
+			cur_pat_add[numCh] += 2;
+			spec_par1[numCh] = pt3array(cur_pat_add[numCh] + 1) + pt3array(cur_pat_add[numCh] + 2)*256;
+			cur_pat_add[numCh] += 2;
 			spec_del_count[numCh]=(char)(spec_del[numCh]);//cavr
 			if((spec_par1[numCh]&0x8000)==0x0000)
 			spec_accum[numCh]=(0-spec_par2[numCh])&0xFFFF;//cavr
@@ -255,7 +260,8 @@ void processLine(unsigned char numCh){
 			case 0x08:
 			spec_com[numCh] = 0x08;
 			spec_del[numCh] = pt3array(cur_pat_add[numCh]++);
-			spec_par1[numCh] = pt3array(cur_pat_add[numCh]++)+pt3array(cur_pat_add[numCh]++)*256;
+			spec_par1[numCh] = pt3array(cur_pat_add[numCh] + 1) + pt3array(cur_pat_add[numCh] + 2)*256;
+			cur_pat_add[numCh] += 2;
 			spec_del_count[numCh]=(char)(spec_del[numCh]);
 			break;
 			case 0x09:
@@ -285,7 +291,8 @@ void playOrnSample(unsigned char numCh){//cavr char
 		if(cur_orn[numCh]>=cur_orn_end[numCh])cur_orn[numCh]=cur_orn_loop[numCh];
 		tmp_sampleH=pt3array(cur_sample[numCh]++);
 		tmp_sampleL=pt3array(cur_sample[numCh]++);
-		tmp_sample_tone=pt3array(cur_sample[numCh]++)+pt3array(cur_sample[numCh]++)*256;
+		tmp_sample_tone=pt3array(cur_sample[numCh] + 1) + pt3array(cur_sample[numCh] + 2)*256;
+		cur_sample[numCh] += 2;
 		if(cur_sample[numCh]>=cur_sample_end[numCh])cur_sample[numCh]=cur_sample_loop[numCh];
 		tmp+=cur_sample_tone_base[numCh]+tmp_sample_tone;
 		if((tmp_sampleL&0x40)==0x40)cur_sample_tone_base[numCh]+=tmp_sample_tone;
