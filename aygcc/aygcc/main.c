@@ -76,8 +76,8 @@ unsigned char bit16RightL;
 unsigned char bit16RightH;
 unsigned char bit16lsb;
 
-register unsigned char toneCountAL asm ("r0");
-register unsigned char toneCountAH asm ("r1");
+register unsigned char toneCountAL asm ("r13");
+register unsigned char toneCountAH asm ("r14");
 register unsigned char toneCountBL asm ("r2");
 register unsigned char toneCountBH asm ("r3");
 register unsigned char toneCountCL asm ("r4");

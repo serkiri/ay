@@ -8,8 +8,8 @@
 
 #include <avr/io.h>
 
-toneCountAL = 0
-toneCountAH = 1
+toneCountAL = 13
+toneCountAH = 14
 toneCountBL = 2
 toneCountBH = 3
 toneCountCL = 4
