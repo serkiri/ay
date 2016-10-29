@@ -22,7 +22,7 @@ envelopeCountL = 10
 envelopeCountH = 11
 envelopeAmpl = 12
 
-bit16lsb = 27
+bit16lsbreg = 27
 tmpL = 28
 tmpH = 29
 temp = 30
@@ -30,7 +30,7 @@ temp2 = 31
                 
 .global TIMER1_COMPA_vect
 TIMER1_COMPA_vect:
-    push bit16lsb  
+    push bit16lsbreg  
     push tmpL
     push tmpH
     push temp
@@ -244,13 +244,13 @@ lblenvEsp:
     clr  envelopeAmpl
 lblenvelope: 
     
-    cbi  0x18,3;WS=0
-    lds  bit16lsb,bit16lsb
-    lsr  bit16lsb
+    cbi  _SFR_IO_ADDR(PORTB),3;WS=0
+    lds  bit16lsbreg,bit16lsb
+    lsr  bit16lsbreg
     lds  temp,bit16LeftH
     ror  temp
-    rol  bit16lsb      
-    out  SPDR,temp  
+    rol  bit16lsbreg      
+    out  _SFR_IO_ADDR(SPDR),temp  
 
     ;syntheserA                  
     ldi  temp2,0x01                       
@@ -280,11 +280,11 @@ lblmixernoiseA:
 lblmixerstatA:
     sts  dacA,temp2
 
-    lsr  bit16lsb
+    lsr  bit16lsbreg
     lds  temp,bit16LeftL
     ror  temp
-    rol  bit16lsb
-    out  SPDR,temp  
+    rol  bit16lsbreg
+    out  _SFR_IO_ADDR(SPDR),temp  
 
     ;syntheserB                
     ldi  temp2,0x01                       
@@ -314,12 +314,12 @@ lblmixernoiseB:
 lblmixerstatB:
     sts  dacB,temp2     
     
-    sbi  0x18,3;WS=1
-    lsr  bit16lsb
+    sbi  _SFR_IO_ADDR(PORTB),3;WS=1
+    lsr  bit16lsbreg
     lds  temp,bit16RightH
     ror  temp
-    rol  bit16lsb
-    out  SPDR,temp  
+    rol  bit16lsbreg
+    out  _SFR_IO_ADDR(SPDR),temp  
 
     ;syntheserC                  
     ldi  temp2,0x01                       
@@ -349,12 +349,12 @@ lblmixernoiseC:
 lblmixerstatC:
     sts  dacC,temp2      
     
-    lsr  bit16lsb
+    lsr  bit16lsbreg
     lds  temp,bit16RightL
     ror  temp
-    rol  bit16lsb
-    out  SPDR,temp  
-    sts  bit16lsb,bit16lsb
+    rol  bit16lsbreg
+    out  _SFR_IO_ADDR(SPDR),temp  
+    sts  bit16lsb,bit16lsbreg
     
 //bit16
     lds  temp2,dacA
@@ -414,5 +414,5 @@ lbllpmB:
     pop  temp
     pop  tmpH
     pop  tmpL 
-    pop  bit16lsb
+    pop  bit16lsbreg
     reti
