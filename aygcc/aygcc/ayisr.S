@@ -166,7 +166,7 @@ lblensk:
     breq lblenv4567F
 lblenvelopeSkip:
     rjmp lblenvelope
-lblenv4567F:;/___
+lblenv4567F:
     tst  envelopeAmpl
     brmi lblenvelopeSkip
     inc  envelopeAmpl
@@ -176,7 +176,7 @@ lblenv4567F:;/___
     ldi  temp,0x80
     mov  envelopeAmpl,temp    
     rjmp lblenvelope
-lblenv01239:;\___
+lblenv01239:
     tst  envelopeAmpl
     brmi lblenvelope
     dec  envelopeAmpl
@@ -184,12 +184,12 @@ lblenv01239:;\___
     ldi  temp,0x80
     mov  envelopeAmpl,temp    
     rjmp lblenvelope
-lblenv8:;\\\\
+lblenv8:
     dec  envelopeAmpl
     ldi  temp,0x0F
     and  envelopeAmpl,temp
     rjmp lblenvelope
-lblenvA:;\/\/
+lblenvA:
     tst  envelopeAmpl
     brmi lblenvAsp
     dec  envelopeAmpl
@@ -205,7 +205,7 @@ lblenvAsp:
     ldi  temp,0x0F
     mov  envelopeAmpl,temp 
     rjmp lblenvelope
-lblenvB:;\---
+lblenvB:
     tst  envelopeAmpl
     brmi lblenvelope
     dec  envelopeAmpl
@@ -213,12 +213,12 @@ lblenvB:;\---
     ldi  temp,0x8F
     mov  envelopeAmpl,temp    
     rjmp lblenvelope
-lblenvC:;////
+lblenvC:
     inc  envelopeAmpl
     ldi  temp,0x0F
     and  envelopeAmpl,temp
     rjmp lblenvelope
-lblenvD:;/---
+lblenvD:
     tst  envelopeAmpl
     brmi lblenvelope
     inc  envelopeAmpl
@@ -228,7 +228,7 @@ lblenvD:;/---
     ldi  temp,0x8F
     mov  envelopeAmpl,temp    
     rjmp lblenvelope
-lblenvE:;/\/\
+lblenvE:
     tst  envelopeAmpl
     brmi lblenvEsp
     inc  envelopeAmpl
